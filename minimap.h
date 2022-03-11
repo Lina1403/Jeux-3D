@@ -1,3 +1,11 @@
+
+
+#include <stdio.h>
+#include <stdlib.h>
+#include "/usr/include/SDL/SDL.h"
+#include </usr/include/SDL/SDL_image.h>
+#include <string.h>
+
 struct minimap
 {
 	SDL_Surface* mini_map;
@@ -15,3 +23,8 @@ void blit_minimap( minimap* mp,SDL_Surface *screen);
 void background_load(SDL_Surface *image,char nom [] ,SDL_Rect pos1)
 void dep_mini_hero (SDL_Rect* pos_perso,minimap mp , SDL_Rect camera,int redimensionnement,int sens);
 void free_minimap(minimap* mp);
+
+
+
+
+
