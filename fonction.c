@@ -12,6 +12,13 @@ int main(void)
     int width =   ;
     int height =  ;
     
+    
+      // background load
+    SDL_Surface *image = SDL_LoadBMP(".bmp");
+    pos1.x = ;
+    pos1.y = ;
+    pos1.h = image->h;
+    pos1.w = image->w;
 
 
   
