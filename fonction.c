@@ -1,61 +1,28 @@
-  #include <stdio.h>
-  #include <string.h>
-  #include <stdlib.h>
-  #include <math.h>
-  #include <SDL.h>
-  #include"minimap.h"
-  
-  
-  
-  void init_map (map *m,SDL_Surface *screen)
-{
-m->map=IMG_Load("mini.png");
-m->map_pos.x = 820;
-m->map_pos.y = 640;
-;
+#include "minimap.h"
+#include <SDL/SDL.h>
 
-m->mini_perso=SDL_CreateRGBSurface(SDL_HWSURFACE|SDL_DOUBLEBUF,10,10,32,0,0,0,0);
-SDL_FillRect(m->mini_perso,NULL,SDL_MapRGB(screen->format,0,0,255));
-m->pos_perso_map.x=0;
-m->pos_perso_map.y=0;
-
-m->mini_entite=SDL_CreateRGBSurface(SDL_HWSURFACE|SDL_DOUBLEBUF,10,10,32,0,0,0,0);
-SDL_FillRect(m->mini_entite,NULL,SDL_MapRGB(screen->format,255,0,0));
-m->pos_entite_map.x=0;
-m->pos_entite_map.y=0;
-
-}
-void perso_map(map *m, perso *p)
-{
-  m->pos_perso_map.x=p->position_perso.x/10+m->map_pos.x;
-    m->pos_perso_map.y=p->position_perso.y/10+10+m->map_pos.y;
-    
+void init_map (minimap *m)
+{ m -> map = IMG_Load("minimap.png");
+  m-> minijoueur = IMG_Load("persomini.png");
+  m->positionmap.x =250;
+  m->positionmap.y =19;//position de minimap
+  m->positionminijoueur.x =250;
+  m->positionminijoueur.y =21;//position du bonhomme 
 }
 
-
-
-void entite_map(map *m, entite *e)
+void MAJMinimap(SDL_Rect posJoueur,  minimap * m, SDL_Rect camera, int redimensionnement)
 {
-  m->pos_entite_map.x=e->entite_pos.x/10+m->map_pos.x;
-    m->pos_entite_map.y=e->entite_pos.y/10+10+m->map_pos.y;
+  SDL_Rect posJoueurABS;//position absolue de joueur
+  posJoueurABS.x = 0;
+  posJoueurABS.y = 0;
+  posJoueurABS.x = posJoueur.x + camera.x;
+  posJoueurABS.y = posJoueur.y + camera.y;
+  m->positionminijoueur.x=(posJoueurABS.x * redimensionnement/100)+250;//mettre à jour la position du minijoueur
+  m->positionminijoueur.y=(posJoueurABS.y * redimensionnement/100)+21;
 }
 
-
-void affiche_map(map *m , SDL_Surface *screen, entite *e)
+void afficherminimap (minimap m, SDL_Surface * screen)
 {
-      SDL_BlitSurface(m->map, NULL, screen,&m->map_pos);
-      SDL_BlitSurface(m->mini_perso, NULL, screen,&m->pos_perso_map);
-      if (e->affich_minimap)
-      SDL_BlitSurface(m->mini_entite, NULL, screen,&m->pos_entite_map);
-
+  SDL_BlitSurface(m.map,NULL,screen,&m.positionmap);//tlasa9lk lminimap 3l écran fl position li 7atitha 
+  SDL_BlitSurface(m.minijoueur,NULL,screen,&m.positionminijoueur);
 }
-
-
-
-void mise_a_jour_map(map *m , SDL_Surface *screen, perso *p, entite *e)
-{
-  perso_map(m,p);
-  entite_map(m,e);
-  affiche_map(m,screen,e);
-} 
-
